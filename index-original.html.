@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asher Void | Comedian</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: #090909;
+      color: #f5f5f5;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+    header {
+      padding: 65px 20px 50px;
+      text-align: center;
+      background: linear-gradient(#171717, #090909);
+    }
+    h1 {
+      font-size: clamp(42px, 8vw, 90px);
+      letter-spacing: 5px;
+      line-height: 1;
+      margin: 0;
+      font-weight: 900;
+    }
+    .red { color: #c91f32; }
+    .tagline {
+      color: #bbb;
+      font-size: 17px;
+      margin-top: 25px;
+    }
+    nav {
+      padding: 18px;
+      text-align: center;
+      border-top: 1px solid #333;
+      border-bottom: 1px solid #333;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 8px 14px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    nav a:hover { color: #e23848; }
+    section {
+      max-width: 950px;
+      margin: auto;
+      padding: 65px 25px;
+      border-bottom: 1px solid #292929;
+    }
+    h2 {
+      color: #e23848;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+    .placeholder {
+      border: 1px dashed #555;
+      background: #161616;
+      padding: 55px 20px;
+      text-align: center;
+      color: #aaa;
+      border-radius: 6px;
+    }
+    .button {
+      display: inline-block;
+      background: #b51e30;
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 35px;
+      color: #888;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>ASHER <span class="red">VOID</span></h1>
+  <p class="tagline">
+    Making Edgar Allan Poe look like a day drinker.
+  </p>
+</header>
+
+<nav>
+  <a href="#about">ABOUT</a>
+  <a href="#video">VIDEO</a>
+  <a href="#audio">AUDIO</a>
+  <a href="#photos">PHOTOS</a>
+  <a href="#book">BOOK</a>
+  <a href="#booking">BOOKING</a>
+</nav>
+
+<section id="about">
+  <h2>About Asher Void</h2>
+  <p>
+    Dark comedy. Deadpan delivery. Unexpected turns.
+    Asher Void brings an unconventional voice to
+    stand-up comedy.
+  </p>
+</section>
+
+<section id="video">
+  <h2>Stand-Up Video</h2>
+  <div class="placeholder">
+    Performance video coming soon.
+  </div>
+</section>
+
+<section id="audio">
+  <h2>Audio</h2>
+  <div class="placeholder">
+    Audio recordings coming soon.
+  </div>
+</section>
+
+<section id="photos">
+  <h2>Photos</h2>
+  <div class="placeholder">
+    Performance and promotional photographs
+    coming soon.
+  </div>
+</section>
+
+<section id="book">
+  <h2>The Book</h2>
+  <p>
+    Explore the dark comedic writing of Asher Void.
+  </p>
+  <div class="placeholder">
+    Book cover and purchase link coming soon.
+  </div>
+</section>
+
+<section id="booking">
+  <h2>Booking &amp; Contact</h2>
+  <p>
+    For comedy bookings, showcases, management,
+    and professional inquiries.
+  </p>
+  <p>Booking contact information coming soon.</p>
+</section>
+
+<footer>
+  &copy; 2026 Asher Void. All rights reserved.
+</footer>
+
+</body>
+</html>
