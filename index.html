@@ -807,6 +807,7 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
   }
   function playMusic(){
     if(!audio.paused)return;
+    const song=document.getElementById('av-zoll-audio');if(song&&!song.paused)return;
     const result=audio.play();
     if(result&&typeof result.catch==='function')result.catch(function(){reflect();});
   }
@@ -880,7 +881,7 @@ const audio=document.getElementById('av-zoll-audio'),button=document.getElementB
 const pen=canvas.getContext('2d');let context,analyser,samples,source,raf=0;
 function draw(){const dpr=window.devicePixelRatio||1,w=canvas.clientWidth,h=canvas.clientHeight;if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}pen.setTransform(dpr,0,0,dpr,0,0);pen.fillStyle='#000';pen.fillRect(0,0,w,h);pen.strokeStyle='#ff4852';pen.lineWidth=2;pen.shadowColor='#ff4852';pen.shadowBlur=7;pen.beginPath();if(analyser&&!audio.paused){analyser.getByteTimeDomainData(samples);for(let i=0;i<samples.length;i++){const x=i*w/(samples.length-1),y=h/2+(samples[i]-128)/128*h*.46;if(i===0)pen.moveTo(x,y);else pen.lineTo(x,y);}}else{pen.moveTo(0,h/2);pen.lineTo(w,h/2);}pen.stroke();pen.shadowBlur=0;raf=0;if(!audio.paused)raf=requestAnimationFrame(draw);}
 function reflect(){button.setAttribute('aria-pressed',String(!audio.paused));button.setAttribute('aria-label',(audio.paused?'Play':'Pause')+' Zoll no. 3');status.textContent=audio.paused?'Press to play / pause':'Playing — press to pause';if(!raf)draw();}
-button.addEventListener('click',async function(){if(!audio.paused){audio.pause();return;}try{status.textContent='Loading…';const AudioContext=window.AudioContext||window.webkitAudioContext;if(AudioContext&&!context){context=new AudioContext();analyser=context.createAnalyser();analyser.fftSize=2048;samples=new Uint8Array(analyser.fftSize);source=context.createMediaElementSource(audio);source.connect(analyser);analyser.connect(context.destination);}if(context)await context.resume();await audio.play();}catch(e){status.textContent='Unable to play. Press to retry.';}});
+button.addEventListener('click',async function(){if(!audio.paused){audio.pause();return;}try{status.textContent='Loading…';const AudioContext=window.AudioContext||window.webkitAudioContext;if(AudioContext&&!context){context=new AudioContext();analyser=context.createAnalyser();analyser.fftSize=2048;samples=new Uint8Array(analyser.fftSize);source=context.createMediaElementSource(audio);source.connect(analyser);analyser.connect(context.destination);}if(context)await context.resume();await audio.play();}catch(e){console.error('Zoll playback:',e);status.textContent='Unable to play. Press to retry.';}});
 audio.addEventListener('play',function(){document.querySelectorAll('audio,video').forEach(other=>{if(other!==audio)other.pause();});reflect();});
 audio.addEventListener('pause',reflect);audio.addEventListener('ended',reflect);
 audio.addEventListener('error',()=>{status.textContent='Audio unavailable. Please try again.';});
