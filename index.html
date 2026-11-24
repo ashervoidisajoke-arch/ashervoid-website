@@ -649,6 +649,9 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
 </style>
 </head>
 <body>
+<!-- Native page-entry soundtrack; loaded before the page media. -->
+<audio id="av-soundtrack" autoplay loop preload="auto" aria-label="Panic Attack background music" src="music/panic-attack.mp3"></audio>
+
 <div class="av-leaf-rain" aria-hidden="true">
 <span class="av-falling-leaf" style="--leaf-x:0.77%;--leaf-size:28.6px;--leaf-duration:3.72s;--leaf-start:2.90s;--leaf-drift:47.8px;--leaf-angle:187deg;--leaf-spin:254deg;--leaf-opacity:0.96;"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><g fill="#ffffff" stroke="#e9f5ff" stroke-width="0.65" stroke-linejoin="round"><path d="M50 74 C43 60 44 33 50 4 C56 33 57 60 50 74Z"/><path d="M50 73 C41 58 26 35 17 15 C34 23 47 42 50 73Z"/><path d="M50 73 C59 58 74 35 83 15 C66 23 53 42 50 73Z"/><path d="M50 74 C34 64 17 47 4 40 C12 59 27 73 50 74Z"/><path d="M50 74 C66 64 83 47 96 40 C88 59 73 73 50 74Z"/><path d="M50 75 C38 69 25 65 13 64 C21 77 37 81 50 75Z"/><path d="M50 75 C62 69 75 65 87 64 C79 77 63 81 50 75Z"/></g><path d="M50 68 L50 97" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></span>
 <span class="av-falling-leaf" style="--leaf-x:2.33%;--leaf-size:33.3px;--leaf-duration:3.56s;--leaf-start:2.44s;--leaf-drift:-54.4px;--leaf-angle:128deg;--leaf-spin:-419deg;--leaf-opacity:0.87;"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><g fill="#ffffff" stroke="#e9f5ff" stroke-width="0.65" stroke-linejoin="round"><path d="M50 74 C43 60 44 33 50 4 C56 33 57 60 50 74Z"/><path d="M50 73 C41 58 26 35 17 15 C34 23 47 42 50 73Z"/><path d="M50 73 C59 58 74 35 83 15 C66 23 53 42 50 73Z"/><path d="M50 74 C34 64 17 47 4 40 C12 59 27 73 50 74Z"/><path d="M50 74 C66 64 83 47 96 40 C88 59 73 73 50 74Z"/><path d="M50 75 C38 69 25 65 13 64 C21 77 37 81 50 75Z"/><path d="M50 75 C62 69 75 65 87 64 C79 77 63 81 50 75Z"/></g><path d="M50 68 L50 97" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></span>
@@ -778,7 +781,7 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
 <footer class="footer"><div class="shell"><span>© 2026 Asher Void</span><span>Dark Humour for a Darker World.</span></div>
 <nav class="av-footer-social" aria-label="Asher Void on social media"><a class="av-social-icon" href="https://www.instagram.com/ashervoidisajoke/" target="_blank" rel="noopener noreferrer" aria-label="Asher Void on Instagram"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJpZyIgeDI9IjEiIHkyPSIwIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZkYzgwIi8+PHN0b3Agb2Zmc2V0PSIuMzUiIHN0b3AtY29sb3I9IiNmNTYwNDAiLz48c3RvcCBvZmZzZXQ9Ii42NSIgc3RvcC1jb2xvcj0iI2MxMzU4NCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzU4NTFkYiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE1IiBmaWxsPSJ1cmwoI2lnKSIvPjxyZWN0IHg9IjE0IiB5PSIxNCIgd2lkdGg9IjM2IiBoZWlnaHQ9IjM2IiByeD0iMTEiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNCIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNCIvPjxjaXJjbGUgY3g9IjQ0IiBjeT0iMjAiIHI9IjIuNiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" alt="Instagram" width="64" height="64"></a><a class="av-social-icon" href="https://youtube.com/@ashervoidisajoke" target="_blank" rel="noopener noreferrer" aria-label="Asher Void on YouTube"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MCA2NCI+PHJlY3QgeD0iMSIgeT0iMSIgd2lkdGg9Ijg4IiBoZWlnaHQ9IjYyIiByeD0iMTYiIGZpbGw9IiNmZjAwMDAiLz48cGF0aCBkPSJNMzYgMTh2MjhsMjUtMTR6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" alt="YouTube" width="90" height="64"></a></nav></footer>
 <!-- Request soundtrack playback on page entry; the large control toggles it. -->
-<audio id="av-soundtrack" loop preload="auto" aria-label="Panic Attack background music" src="music/panic-attack.mp3"></audio>
+
 
 <script>
 // The background stays absolutely stationary; only the sticky header changes
@@ -829,6 +832,7 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
   const safeButton=document.getElementById('av-can-press');
   if(!audio||!invitation)return;
   audio.volume=0.5;
+  let entryPlaybackPending=audio.paused;
   function reflect(){
     const playing=!audio.paused;
     invitation.classList.toggle('is-playing',false);
@@ -846,7 +850,7 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
     const result=audio.play();
     if(result&&typeof result.catch==='function')result.catch(function(){reflect();});
   }
-  function pauseMusic(){if(!audio.paused)audio.pause();}
+  function pauseMusic(){entryPlaybackPending=false;if(!audio.paused)audio.pause();}
   if(safeButton)safeButton.addEventListener('click',function(){
     if(!audio.paused){pauseMusic();return;}
     document.querySelectorAll('audio,video').forEach(function(media){if(media!==audio)media.pause();});
@@ -881,16 +885,20 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
   invitation.addEventListener('animationend',function(e){
     if(e.animationName==='av-button-impact')invitation.classList.remove('av-button-hit');
   });
-  audio.addEventListener('play',reflect);
+  audio.addEventListener('play',function(){entryPlaybackPending=false;reflect();});
   audio.addEventListener('pause',reflect);
   audio.addEventListener('error',function(){
     if(safeButton){safeButton.textContent='Music Unavailable';safeButton.disabled=true;}
   });
   reflect();
-  // Sync the page-entry song with the intro's first explosion burst.
-  const introPlaying=document.documentElement.getAttribute('data-av-intro')==='play';
-  const elapsed=typeof window.__avIntroStartedAt==='number'?performance.now()-window.__avIntroStartedAt:0;
-  window.setTimeout(playMusic,introPlaying?Math.max(0,370-elapsed):0);
+  // Native autoplay plus readiness retries for slow-loading mobile connections.
+  // Never retry after playback starts or after the visitor stops the song.
+  function tryEntryPlayback(){if(entryPlaybackPending)playMusic();}
+  audio.addEventListener('loadeddata',tryEntryPlayback);
+  audio.addEventListener('canplay',tryEntryPlayback);
+  window.addEventListener('load',tryEntryPlayback,{once:true});
+  window.addEventListener('pageshow',tryEntryPlayback);
+  tryEntryPlayback();
   // Pause the soundtrack whenever someone starts watching a Vimeo set.
   const frames=Array.from(document.querySelectorAll('.video-frame iframe'));
   function subscribe(frame){
