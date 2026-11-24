@@ -654,6 +654,10 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
 @keyframes av-amplifier-glow{0%,100%{transform:scale(.96);text-shadow:0 0 3px #fff,0 0 7px rgba(255,255,255,.55),0 0 13px rgba(225,240,255,.3)}50%{transform:scale(1.09);text-shadow:0 0 5px #fff,0 0 13px rgba(255,255,255,.95),0 0 26px rgba(235,245,255,.8),0 0 40px rgba(220,238,255,.5)}}
 @media(prefers-reduced-motion:reduce){.av-music-glow{animation:none;will-change:auto}}
 </style>
+<style>
+/* Center the two original performance videos at their existing desktop size. */
+@media (min-width:701px){#video .video-grid{grid-template-columns:repeat(2,minmax(0,1fr));width:calc(66.6667% - 6px);margin:20px auto 0;justify-content:center}}
+</style>
 </head>
 <body>
 <!-- Native page-entry soundtrack; loaded before the page media. -->
