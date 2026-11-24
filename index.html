@@ -33,6 +33,7 @@
   }
   if(!reduce && !hasAnchor && (!seen || /(?:\?|&)av_replay=1(?:&|$)/.test(location.search))) {
     document.documentElement.setAttribute('data-av-intro','play');
+    window.__avIntroStartedAt=performance.now();
     if(mobile) document.documentElement.setAttribute('data-av-intro-mobile','true');
   }
 })();
@@ -777,7 +778,7 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
 <footer class="footer"><div class="shell"><span>© 2026 Asher Void</span><span>Dark Humour for a Darker World.</span></div>
 <nav class="av-footer-social" aria-label="Asher Void on social media"><a class="av-social-icon" href="https://www.instagram.com/ashervoidisajoke/" target="_blank" rel="noopener noreferrer" aria-label="Asher Void on Instagram"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJpZyIgeDI9IjEiIHkyPSIwIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZkYzgwIi8+PHN0b3Agb2Zmc2V0PSIuMzUiIHN0b3AtY29sb3I9IiNmNTYwNDAiLz48c3RvcCBvZmZzZXQ9Ii42NSIgc3RvcC1jb2xvcj0iI2MxMzU4NCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzU4NTFkYiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE1IiBmaWxsPSJ1cmwoI2lnKSIvPjxyZWN0IHg9IjE0IiB5PSIxNCIgd2lkdGg9IjM2IiBoZWlnaHQ9IjM2IiByeD0iMTEiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNCIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNCIvPjxjaXJjbGUgY3g9IjQ0IiBjeT0iMjAiIHI9IjIuNiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" alt="Instagram" width="64" height="64"></a><a class="av-social-icon" href="https://youtube.com/@ashervoidisajoke" target="_blank" rel="noopener noreferrer" aria-label="Asher Void on YouTube"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MCA2NCI+PHJlY3QgeD0iMSIgeT0iMSIgd2lkdGg9Ijg4IiBoZWlnaHQ9IjYyIiByeD0iMTYiIGZpbGw9IiNmZjAwMDAiLz48cGF0aCBkPSJNMzYgMTh2MjhsMjUtMTR6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" alt="YouTube" width="90" height="64"></a></nav></footer>
 <!-- Request soundtrack playback on page entry; the large control toggles it. -->
-<audio id="av-soundtrack" loop preload="none" aria-label="Panic Attack background music" src="music/panic-attack.mp3"></audio>
+<audio id="av-soundtrack" loop preload="auto" aria-label="Panic Attack background music" src="music/panic-attack.mp3"></audio>
 
 <script>
 // The background stays absolutely stationary; only the sticky header changes
@@ -886,8 +887,10 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
     if(safeButton){safeButton.textContent='Music Unavailable';safeButton.disabled=true;}
   });
   reflect();
-  // Attempt playback immediately; a blocked attempt leaves the toggle usable.
-  playMusic();
+  // Sync the page-entry song with the intro's first explosion burst.
+  const introPlaying=document.documentElement.getAttribute('data-av-intro')==='play';
+  const elapsed=typeof window.__avIntroStartedAt==='number'?performance.now()-window.__avIntroStartedAt:0;
+  window.setTimeout(playMusic,introPlaying?Math.max(0,370-elapsed):0);
   // Pause the soundtrack whenever someone starts watching a Vimeo set.
   const frames=Array.from(document.querySelectorAll('.video-frame iframe'));
   function subscribe(frame){
@@ -924,7 +927,11 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
 })();
 </script>
 <script id="av-equalizer">
-(()=>{const canvas=document.getElementById('av-music-eq'),pen=canvas.getContext('2d');let ctx,active,raf=0;const nodes=new Map();function draw(){const d=devicePixelRatio||1,w=canvas.clientWidth,h=canvas.clientHeight;canvas.width=w*d;canvas.height=h*d;pen.setTransform(d,0,0,d,0,0);pen.fillStyle='#050b11';pen.fillRect(0,0,w,h);let values;if(active&&!active.media.paused){values=new Uint8Array(active.analyser.frequencyBinCount);active.analyser.getByteFrequencyData(values);}const count=40;for(let i=0;i<count;i++){let value=values?values[Math.floor(i*values.length/count)]/255:0;let bar=3+value*(h-16);pen.fillStyle=values?'#ff4555':'#5a8b9f';pen.shadowColor='#ff4555';pen.shadowBlur=values?6:0;pen.fillRect(i*w/count+2,h-bar-6,w/count-4,bar);}raf=values?requestAnimationFrame(draw):0;}document.querySelectorAll('audio').forEach(media=>media.addEventListener('play',()=>{try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();if(!nodes.has(media)){const source=ctx.createMediaElementSource(media),analyser=ctx.createAnalyser();analyser.fftSize=256;source.connect(analyser);analyser.connect(ctx.destination);nodes.set(media,{media,analyser});}active=nodes.get(media);ctx.resume();if(!raf)draw();}catch(e){draw();}}));window.addEventListener('resize',()=>{if(!raf)draw();});draw();})();
+(()=>{const canvas=document.getElementById('av-music-eq'),pen=canvas.getContext('2d');let ctx,active,raf=0;const nodes=new Map();function draw(){const d=devicePixelRatio||1,w=canvas.clientWidth,h=canvas.clientHeight;canvas.width=w*d;canvas.height=h*d;pen.setTransform(d,0,0,d,0,0);pen.fillStyle='#050b11';pen.fillRect(0,0,w,h);let values;if(active&&!active.media.paused){values=new Uint8Array(active.analyser.frequencyBinCount);active.analyser.getByteFrequencyData(values);}const count=40;for(let i=0;i<count;i++){let value=values?values[Math.floor(i*values.length/count)]/255:0;let bar=3+value*(h-16);pen.fillStyle=values?'#ff4555':'#5a8b9f';pen.shadowColor='#ff4555';pen.shadowBlur=values?6:0;pen.fillRect(i*w/count+2,h-bar-6,w/count-4,bar);}raf=values?requestAnimationFrame(draw):0;}// Keep ordinary audio output intact until the analyser's engine is running.
+function attachAnalyser(media){if(ctx.state!=='running'||media.paused)return;try{if(!nodes.has(media)){const source=ctx.createMediaElementSource(media),analyser=ctx.createAnalyser();analyser.fftSize=256;source.connect(analyser);analyser.connect(ctx.destination);nodes.set(media,{media,analyser});}active=nodes.get(media);if(!raf)draw();}catch(e){draw();}}
+document.querySelectorAll('audio').forEach(media=>media.addEventListener('play',()=>{try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='running')attachAnalyser(media);else ctx.resume().then(()=>attachAnalyser(media)).catch(()=>{});}catch(e){draw();}}));
+function resumeAnalyser(){if(!ctx)return;ctx.resume().then(()=>{document.querySelectorAll('audio').forEach(media=>{if(!media.paused)attachAnalyser(media);});}).catch(()=>{});}
+document.addEventListener('pointerdown',resumeAnalyser,{passive:true});document.addEventListener('keydown',resumeAnalyser);window.addEventListener('resize',()=>{if(!raf)draw();});draw();})();
 </script><script>
 (function(){
 const video=document.getElementById('av-burn-video'),button=document.getElementById('av-burn-play');
