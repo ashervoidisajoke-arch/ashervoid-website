@@ -20,6 +20,7 @@
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mobile = window.matchMedia('(max-width: 650px)').matches;
+  if(!reduce && 'IntersectionObserver' in window) document.documentElement.classList.add('av-slide-managed');
   var hasAnchor = !!location.hash;
   var key = 'asher-void-intro-seen-v2';
   var seen = false;
@@ -508,7 +509,11 @@ main .section h2{
   animation:av-do-not-push-arrive .8s cubic-bezier(.12,.84,.23,1.18) both;
   animation-delay:.28s;
 }
-html[data-av-intro="play"] .av-do-not-push{animation-delay:1.21s}
+html[data-av-intro="play"] .av-do-not-push{animation-delay:2.35s}
+/* Wait for the reveal and actual viewport visibility before sliding in. */
+html.av-slide-managed .av-do-not-push:not(.av-button-hit){animation:none;}
+html.av-slide-managed .av-do-not-push:not(.av-slide-ready):not(.av-button-hit){opacity:0;}
+html.av-slide-managed .av-do-not-push.av-slide-ready:not(.av-slide-done):not(.av-button-hit){animation:av-do-not-push-arrive 1.05s cubic-bezier(.12,.84,.23,1.08) both;animation-delay:0s;}
 .av-do-not-push:before{content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.11);border-radius:2px;pointer-events:none}
 .av-do-not-push-mark{flex:none;display:grid;place-items:center;width:28px;height:28px;border:2px solid #f33b47;border-radius:50%;color:#f33b47;font:900 21px/1 'Barlow Condensed',Impact,sans-serif}
 .av-do-not-push-copy{display:flex;flex:1;flex-direction:column;align-items:center;gap:3px;min-width:0;white-space:nowrap;text-align:center}
@@ -522,7 +527,7 @@ html[data-av-intro="play"] .av-do-not-push{animation-delay:1.21s}
 .av-do-not-push.is-playing .av-do-not-push-mark{background:#f33441;color:#fff}
 .av-do-not-push.av-button-hit{animation:av-button-impact .35s ease-out 1}
 @keyframes av-do-not-push-arrive{
-  0%{opacity:0;transform:translate3d(220px,0,0) rotate(4deg)}
+  0%{opacity:0;transform:translate3d(max(320px, 55vw),0,0) rotate(4deg)}
   66%{opacity:1;transform:translate3d(-13px,0,0) rotate(-1deg)}
   100%{opacity:1;transform:translate3d(0,0,0) rotate(0)}
 }
@@ -640,8 +645,8 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
 .av-footer-social .button:hover,.av-footer-social .button:focus-visible{background:var(--red);color:#fff}
 </style>
 <style>
-/* Larger amplifier-style music toggle: only the white lettering breathes. */
-.av-can-press{width:300px;min-height:64px;padding:15px 22px;background:linear-gradient(145deg,#263c59,#09162e);color:#fff;font-size:25px;border:1px solid rgba(235,245,255,.9);box-shadow:inset 0 1px 9px rgba(255,255,255,.12),0 5px 18px rgba(0,0,0,.3)}
+/* Compact amplifier-style music toggle, centered between the one-sheet and surprise. */
+.av-can-press{align-self:center;width:156px;min-height:38px;padding:7px 10px;background:linear-gradient(145deg,#263c59,#09162e);color:#fff;font-size:16px;border:1px solid rgba(235,245,255,.9);box-shadow:inset 0 1px 9px rgba(255,255,255,.12),0 5px 18px rgba(0,0,0,.3)}
 .av-can-press:hover,.av-can-press:focus-visible,.av-can-press.is-playing{background:linear-gradient(145deg,#345475,#102342)}
 .av-music-glow{display:inline-block;color:#fff;transform-origin:center;animation:av-amplifier-glow 5.5s ease-in-out infinite;will-change:transform;text-shadow:0 0 3px #fff,0 0 8px rgba(255,255,255,.65),0 0 18px rgba(225,240,255,.45)}
 @keyframes av-amplifier-glow{0%,100%{transform:scale(.96);text-shadow:0 0 3px #fff,0 0 7px rgba(255,255,255,.55),0 0 13px rgba(225,240,255,.3)}50%{transform:scale(1.09);text-shadow:0 0 5px #fff,0 0 13px rgba(255,255,255,.95),0 0 26px rgba(235,245,255,.8),0 0 40px rgba(220,238,255,.5)}}
@@ -824,6 +829,20 @@ html[data-av-intro="play"] .av-leaf-rain{display:block!important}
 </script>
 
 <script>
+/* Run the surprise-button entrance only once the visitor can actually see it. */
+(function(){
+  const root=document.documentElement;
+  const button=document.getElementById('av-do-not-push');
+  if(!button || !root.classList.contains('av-slide-managed'))return;
+  let visible=false, revealed=!root.hasAttribute('data-av-intro'), started=false;
+  let observer;
+  function start(){if(started || !visible || !revealed)return; started=true; button.classList.add('av-slide-ready'); if(observer)observer.disconnect();}
+  observer=new IntersectionObserver(function(entries){visible=entries.some(function(e){return e.isIntersecting && e.intersectionRatio>=.5;});start();},{threshold:[0,.5]});
+  observer.observe(button);
+  if(!revealed){const elapsed=performance.now()-(window.__avIntroStartedAt||0);window.setTimeout(function(){revealed=true;start();},Math.max(0,2350-elapsed));}
+  button.addEventListener('focus',function(){visible=true;revealed=true;start();});
+  button.addEventListener('animationend',function(e){if(e.animationName==='av-do-not-push-arrive')button.classList.add('av-slide-done');});
+})();
 /* Request music on page entry where browser permissions allow it.
    Keep the Stop/Start control available when autoplay is blocked. */
 (function(){
